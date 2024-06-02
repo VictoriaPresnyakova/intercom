@@ -24,13 +24,18 @@ class LoginController:
         user = self.user_service.get_user_by_email(username)
 
         if user and user.password == hashlib.sha256(self.view.password_input.text().encode()).hexdigest():
-            token = self.user_service.generate_token()
-            user.auth_token = token
-            self.user_service.update_user(user)
-            self.mail_sender.send_email(user.email, subject="Your Authentication Token",
-                                        body=f"Your authentication token is: {token}")
-            self.main_window.auth_controller.set_user(user)
-            self.view.message_label.setText('Login successful')
-            self.main_window.show_auth_view()
+            if user.settings.get('2factor', False):
+                token = self.user_service.generate_token()
+                user.auth_token = token
+                self.user_service.update_user(user)
+                self.mail_sender.send_email(user.email, subject="Your Authentication Token",
+                                            body=f"Your authentication token is: {token}")
+                self.main_window.auth_controller.set_user(user)
+                self.view.message_label.setText('Login successful')
+                self.main_window.show_auth_view()
+            else:
+                self.main_window.set_current_user(user)
+                self.main_window.show_main_view()
+
         else:
             self.view.message_label.setText('Invalid credentials')

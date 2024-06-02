@@ -27,7 +27,7 @@ class UserRepo(UserRepoABC):
         except Exception as e:
             return {}
 
-    def create_user(self, **kwargs):
+    def create_user(self, kwargs):
         return insert_new_record('public.user', kwargs)
 
     def find_user_by_id(self, id: int):
@@ -40,7 +40,7 @@ class UserRepo(UserRepoABC):
         except Exception as e:
             return {}
 
-    def update_user_by_id(self, id: int, **kwargs):
+    def update_user_by_id(self, id: int, kwargs):
         return change_record_by_id('public.user', id, kwargs)
 
     def delete_user_by_id(self, id: int):

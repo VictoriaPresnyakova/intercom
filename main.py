@@ -1,11 +1,13 @@
 from PyQt5.QtWidgets import QApplication
 
-from controllers.auth_controller import AuthController, CURRENT_USER
+from controllers.auth_controller import AuthController
 from controllers.initial_controller import InitialController
 from controllers.main_controller import MainController
 from controllers.profile_controller import ProfileController
+from controllers.settings_controller import SettingsController
 from controllers.signup_controller import SignUpController
 from controllers.login_controller import LoginController
+from models.user import User
 from repositories.db.migrate import alembic_auto_migrate
 from views.auth_view import AuthView
 from views.initial_view import InitialView
@@ -16,8 +18,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from views.login_view import LoginView
 from views.main_view import MainView
 from views.profile_view import ProfileView
+from views.settings_view import SettingsView
 from views.signup_view import SignUpView
 
+CURRENT_USER = None
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -31,6 +35,7 @@ class MainWindow(QMainWindow):
         self.signup_view = SignUpView()
         self.auth_view = AuthView()
         self.profile_view = ProfileView()
+        self.settings_view = SettingsView()
         self.main_view = MainView()
 
         # Initialize controllers
@@ -39,6 +44,7 @@ class MainWindow(QMainWindow):
         self.signup_controller = SignUpController(self.signup_view, self)
         self.auth_controller = AuthController(self.auth_view, self)
         self.main_controller = MainController(self.main_view, self)
+        #self.settings_controller = SettingsController(self.settings_view, self)
         #self.profile_controller = ProfileController(self.profile_view, self, None)
 
         #self.main_controller = MainController(self.main_view, self)
@@ -49,6 +55,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.signup_view)
         self.stacked_widget.addWidget(self.auth_view)
         self.stacked_widget.addWidget(self.profile_view)
+        self.stacked_widget.addWidget(self.settings_view)
         self.stacked_widget.addWidget(self.main_view)
 
         # Show initial view initially
@@ -70,12 +77,20 @@ class MainWindow(QMainWindow):
         self.stacked_widget.setCurrentWidget(self.initial_view)
 
     def show_profile_view(self):
-        from controllers.auth_controller import CURRENT_USER
         print(CURRENT_USER)
         if CURRENT_USER:
             self.profile_controller = ProfileController(self.profile_view, self, CURRENT_USER)
-            #self.profile_controller.user = CURRENT_USER
             self.stacked_widget.setCurrentWidget(self.profile_view)
+
+    def show_settings_view(self):
+        print(CURRENT_USER)
+        if CURRENT_USER:
+            self.settings_controller = SettingsController(self.settings_view, self, CURRENT_USER)
+            self.stacked_widget.setCurrentWidget(self.settings_view)
+
+    def set_current_user(self, user: User):
+        global CURRENT_USER
+        CURRENT_USER = user
 
 
 if __name__ == '__main__':

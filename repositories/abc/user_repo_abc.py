@@ -12,7 +12,7 @@ class UserRepoABC(ABC):
         pass
 
     @abstractmethod
-    def create_user(self, **kwargs):
+    def create_user(self, kwargs):
         pass
 
     @abstractmethod
@@ -20,7 +20,7 @@ class UserRepoABC(ABC):
         pass
 
     @abstractmethod
-    def update_user_by_id(self, id: int, **kwargs):
+    def update_user_by_id(self, id: int, kwargs):
         pass
 
     @abstractmethod

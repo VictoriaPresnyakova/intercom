@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+from misc.utils import clear_rest_input_parameters
 from models.user import User
 from repositories.user_repo import UserRepo
 import random
@@ -28,9 +29,9 @@ class UserService:
             print(e)
             return None
 
-    def create_user(self, **kwargs):
+    def create_user(self, kwargs):
         try:
-            return User(**self.repository.create_user(**kwargs))
+            return User(**self.repository.create_user(clear_rest_input_parameters(kwargs)))
         except Exception as e:
             print(e)
             return False
@@ -46,7 +47,7 @@ class UserService:
         try:
             kwargs = deepcopy(user.__dict__)
             id = kwargs.pop('id', -1)
-            return User(**self.repository.update_user_by_id(id, **kwargs))
+            return User(**self.repository.update_user_by_id(id, clear_rest_input_parameters(kwargs)))
         except Exception as e:
             print(e)
             return None

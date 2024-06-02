@@ -45,7 +45,7 @@ class SignUpController:
         }
 
         try:
-            user = self.user_service.create_user(**kwargs)
+            user = self.user_service.create_user(kwargs)
             if not user:
                 raise Exception('Error while save user')
             self.view.message_label.setText('Sign up successful')

@@ -1,8 +1,7 @@
-from models.user import User
 from services.UserService import UserService
 
 
-class ProfileController:
+class SettingsController:
     def __init__(self, view, main_window, user):
         self.view = view
         self.main_window = main_window
@@ -13,16 +12,10 @@ class ProfileController:
         self.user_service = UserService()
 
     def load_user_data(self):
-        self.view.email_input.setText(self.user.email)
-        self.view.full_name_input.setText(self.user.full_name)
-        self.view.phone_input.setText(self.user.phone)
-        self.view.address_input.setText(str(self.user.address))
-        #self.view.key_input.setText(self.user.key) TODO
+        self.view.two_factor_checkbox.setChecked(self.user.settings.get('2factor', False))
 
     def save_user_data(self):
-        self.user.full_name = self.view.full_name_input.text()
-        self.user.phone = self.view.phone_input.text()
-        self.user.address = int(self.view.address_input.text()) #TODO
+        self.user.settings['2factor'] = self.view.two_factor_checkbox.isChecked()
 
         try:
             self.user = self.user_service.update_user(self.user)

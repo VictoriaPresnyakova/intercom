@@ -12,6 +12,9 @@ class MainView(QWidget):
         self.profile_button = QPushButton('Profile', self)
         layout.addWidget(self.profile_button)
 
+        self.settings_button = QPushButton('Settings', self)
+        layout.addWidget(self.settings_button)
+
         self.welcome_label = QLabel('Welcome to the Main Application!', self)
         layout.addWidget(self.welcome_label)
 

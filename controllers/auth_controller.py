@@ -2,9 +2,6 @@ from models.user import User
 from repositories.db.enums import UserRole
 
 
-CURRENT_USER = None
-
-
 class AuthController:
     def __init__(self, view, main_window):
         self.view = view
@@ -18,8 +15,7 @@ class AuthController:
         if self.user and self.user.auth_token == token:
             self.view.message_label.setText('Authentication successful')
             self.user.auth_token = None
-            global CURRENT_USER
-            CURRENT_USER = self.user
+            self.main_window.set_current_user(self.user)
             if self.user.role != UserRole.DOORKEEPER:
                 self.main_window.show_main_view()
             else:

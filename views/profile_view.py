@@ -1,4 +1,3 @@
-# views/profile_view.py
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel
 
 
@@ -38,6 +37,9 @@ class ProfileView(QWidget):
 
         self.save_button = QPushButton('Save', self)
         layout.addWidget(self.save_button)
+
+        self.back_button = QPushButton('Back', self)
+        layout.addWidget(self.back_button)
 
         self.message_label = QLabel('', self)
         layout.addWidget(self.message_label)
