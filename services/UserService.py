@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from models.user import User
 from repositories.user_repo import UserRepo
 import random
@@ -42,7 +44,7 @@ class UserService:
 
     def update_user(self, user: User):
         try:
-            kwargs = user.__dict__
+            kwargs = deepcopy(user.__dict__)
             id = kwargs.pop('id', -1)
             return User(**self.repository.update_user_by_id(id, **kwargs))
         except Exception as e:

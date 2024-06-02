@@ -10,6 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
+from sqlalchemy import ForeignKey
 
 revision = '2481f351089b'
 down_revision = None
@@ -30,10 +31,34 @@ def upgrade():
         sa.Column('full_name', sa.String(), nullable=False),
         sa.Column('phone', sa.String(), nullable=False, unique=True),
         sa.Column('address', sa.Integer, nullable=False, unique=True),
-        sa.Column('key', sa.String(), nullable=False, unique=True),
-        #sa.Column('is_active', sa.Boolean, nullable=False, default=False),
         sa.Column('auth_token', sa.String(), nullable=True)
     )
+
+    notification = op.create_table(
+        'notification',
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
+        sa.Column('text', sa.String(), nullable=False),
+        sa.Column('user_id', sa.Integer, ForeignKey("public.user.id"), nullable=False),
+    )
+
+    intercom = op.create_table(
+        'intercom',
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
+        sa.Column('settings',  sa.JSON, nullable=True, server_default='{}'),
+    )
+
+    request = op.create_table(
+        'request',
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
+        sa.Column('time', sa.DateTime, nullable=False),
+        sa.Column('filename', sa.String(), nullable=True),
+    )
+
+    key = op.create_table(
+        'key',
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
+        sa.Column('is_active', sa.Boolean, nullable=False, default=False),
+        )
 
 
 def downgrade():

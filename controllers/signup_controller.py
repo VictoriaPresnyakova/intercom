@@ -35,9 +35,6 @@ class SignUpController:
         if not self.view.address_input.text().isdigit():
             self.view.message_label.setText('Incorrect address')
             return
-        if self.view.key_input.text() == '':
-            self.view.message_label.setText('Empty key')
-            return
         kwargs = {
             'email': self.view.email_input.text(),
             'password': hashlib.sha256(self.view.password_input.text().encode()).hexdigest(),
@@ -45,7 +42,6 @@ class SignUpController:
             'full_name': self.view.full_name_input.text(),
             'phone': self.view.phone_input.text(),
             'address': int(self.view.address_input.text()),
-            'key': self.view.key_input.text(),
         }
 
         try:

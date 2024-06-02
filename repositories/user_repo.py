@@ -17,11 +17,11 @@ class UserRepo(UserRepoABC):
         except Exception as e:
             return {}
 
-    def get_user_by_email(self, emal: str):
+    def get_user_by_email(self, email: str):
         try:
             with closing(connect()) as conn:
                 with conn.cursor(cursor_factory=NamedTupleCursor) as cursor:
-                    cursor.execute('SELECT * FROM {} where email = %s'.format('public.user'), (emal,))
+                    cursor.execute('SELECT * FROM {} where email = %s'.format('public.user'), (email,))
                     res = cursor.fetchone()
                     return {x: getattr(res, x) for x in res._fields}
         except Exception as e:

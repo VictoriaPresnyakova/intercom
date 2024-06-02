@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QPushButton
 
 
 class MainView(QWidget):
@@ -8,6 +8,9 @@ class MainView(QWidget):
 
     def init_ui(self):
         layout = QVBoxLayout()
+
+        self.profile_button = QPushButton('Profile', self)
+        layout.addWidget(self.profile_button)
 
         self.welcome_label = QLabel('Welcome to the Main Application!', self)
         layout.addWidget(self.welcome_label)
