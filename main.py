@@ -44,10 +44,8 @@ class MainWindow(QMainWindow):
         self.signup_controller = SignUpController(self.signup_view, self)
         self.auth_controller = AuthController(self.auth_view, self)
         self.main_controller = MainController(self.main_view, self)
-        #self.settings_controller = SettingsController(self.settings_view, self)
-        #self.profile_controller = ProfileController(self.profile_view, self, None)
-
-        #self.main_controller = MainController(self.main_view, self)
+        self.settings_controller = None
+        self.profile_controller = None
 
         # Add views to stacked widget
         self.stacked_widget.addWidget(self.initial_view)
@@ -100,5 +98,7 @@ if __name__ == '__main__':
     login_view = LoginView()
 
     main_window = MainWindow()
-    main_window.showMaximized()
+    #main_window.showMaximized()
+    main_window.show()
+
     app.exec_()
