@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QMessageBox
 
 from controllers.auth_controller import AuthController
 from controllers.initial_controller import InitialController
@@ -8,6 +8,7 @@ from controllers.settings_controller import SettingsController
 from controllers.signup_controller import SignUpController
 from controllers.login_controller import LoginController
 from models.user import User
+from repositories.db.enums import UserRole
 from repositories.db.migrate import alembic_auto_migrate
 from views.auth_view import AuthView
 from views.initial_view import InitialView
@@ -75,16 +76,31 @@ class MainWindow(QMainWindow):
         self.stacked_widget.setCurrentWidget(self.initial_view)
 
     def show_profile_view(self):
-        print(CURRENT_USER)
         if CURRENT_USER:
-            self.profile_controller = ProfileController(self.profile_view, self, CURRENT_USER)
-            self.stacked_widget.setCurrentWidget(self.profile_view)
+            if CURRENT_USER.role == UserRole.CHILD:
+                self.show_message_box('Permission Denied', 'Profile with role child can\'t edit profile',
+                                                  lambda: self.show_main_view())
+            else:
+                self.profile_controller = ProfileController(self.profile_view, self, CURRENT_USER)
+                self.stacked_widget.setCurrentWidget(self.profile_view)
 
     def show_settings_view(self):
-        print(CURRENT_USER)
         if CURRENT_USER:
-            self.settings_controller = SettingsController(self.settings_view, self, CURRENT_USER)
-            self.stacked_widget.setCurrentWidget(self.settings_view)
+            if CURRENT_USER.role == UserRole.CHILD:
+                self.show_message_box('Permission Denied', 'Profile with role child can\'t edit settings',
+                                      lambda: self.show_main_view())
+            else:
+                self.settings_controller = SettingsController(self.settings_view, self, CURRENT_USER)
+                self.stacked_widget.setCurrentWidget(self.settings_view)
+
+    def show_message_box(self, title, text, on_click=None):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(text)
+        if on_click:
+            msg.buttonClicked.connect(on_click)
+            msg.destroyed.connect(on_click)
+        x = msg.exec_()  # this will show our messagebox
 
     def set_current_user(self, user: User):
         global CURRENT_USER

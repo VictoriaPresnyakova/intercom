@@ -1,4 +1,5 @@
 from models.user import User
+from repositories.db.enums import UserRole
 from services.UserService import UserService
 
 
@@ -13,11 +14,11 @@ class ProfileController:
         self.user_service = UserService()
 
     def load_user_data(self):
-        self.view.email_input.setText(self.user.email)
-        self.view.full_name_input.setText(self.user.full_name)
-        self.view.phone_input.setText(self.user.phone)
-        self.view.address_input.setText(str(self.user.address))
-        #self.view.key_input.setText(self.user.key) TODO
+            self.view.email_input.setText(self.user.email)
+            self.view.full_name_input.setText(self.user.full_name)
+            self.view.phone_input.setText(self.user.phone)
+            self.view.address_input.setText(str(self.user.address))
+            #self.view.key_input.setText(self.user.key) TODO
 
     def save_user_data(self):
         self.user.full_name = self.view.full_name_input.text()
