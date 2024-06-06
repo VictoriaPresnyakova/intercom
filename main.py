@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QMessageBox
 
+from controllers.access_controller import AccessController
 from controllers.auth_controller import AuthController
 from controllers.initial_controller import InitialController
 from controllers.main_controller import MainController
@@ -10,6 +11,7 @@ from controllers.login_controller import LoginController
 from models.user import User
 from repositories.db.enums import UserRole
 from repositories.db.migrate import alembic_auto_migrate
+from views.access_view import AccessView
 from views.auth_view import AuthView
 from views.initial_view import InitialView
 from views.login_view import LoginView
@@ -24,6 +26,7 @@ from views.signup_view import SignUpView
 
 CURRENT_USER = None
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -37,6 +40,7 @@ class MainWindow(QMainWindow):
         self.auth_view = AuthView()
         self.profile_view = ProfileView()
         self.settings_view = SettingsView()
+        self.access_view = AccessView()
         self.main_view = MainView()
 
         # Initialize controllers
@@ -44,9 +48,11 @@ class MainWindow(QMainWindow):
         self.login_controller = LoginController(self.login_view, self)
         self.signup_controller = SignUpController(self.signup_view, self)
         self.auth_controller = AuthController(self.auth_view, self)
-        self.main_controller = MainController(self.main_view, self)
+        self.main_controller = None
         self.settings_controller = None
         self.profile_controller = None
+        self.access_controller = None
+
 
         # Add views to stacked widget
         self.stacked_widget.addWidget(self.initial_view)
@@ -55,6 +61,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.auth_view)
         self.stacked_widget.addWidget(self.profile_view)
         self.stacked_widget.addWidget(self.settings_view)
+        self.stacked_widget.addWidget(self.access_view)
         self.stacked_widget.addWidget(self.main_view)
 
         # Show initial view initially
@@ -70,7 +77,9 @@ class MainWindow(QMainWindow):
         self.stacked_widget.setCurrentWidget(self.signup_view)
 
     def show_main_view(self):
-        self.stacked_widget.setCurrentWidget(self.main_view)
+        if CURRENT_USER:
+            self.main_controller = MainController(self.main_view, self, CURRENT_USER)
+            self.stacked_widget.setCurrentWidget(self.main_view)
 
     def show_initial_view(self):
         self.stacked_widget.setCurrentWidget(self.initial_view)
@@ -92,6 +101,11 @@ class MainWindow(QMainWindow):
             else:
                 self.settings_controller = SettingsController(self.settings_view, self, CURRENT_USER)
                 self.stacked_widget.setCurrentWidget(self.settings_view)
+
+    def show_access_view(self):
+        if CURRENT_USER:
+            self.access_controller = AccessController(self.access_view, self, CURRENT_USER)
+            self.stacked_widget.setCurrentWidget(self.access_view)
 
     def show_message_box(self, title, text, on_click=None):
         msg = QMessageBox()

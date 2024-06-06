@@ -32,7 +32,8 @@ def upgrade():
         sa.Column('phone', sa.String(), nullable=False, unique=True),
         sa.Column('address', sa.Integer, nullable=False, unique=True),
         sa.Column('auth_token', sa.String(), nullable=True),
-        sa.Column('settings', sa.JSON, nullable=True, server_default='{"2factor": false}'),
+        sa.Column('settings', sa.JSON, nullable=True,
+                  server_default='{"2factor": false, "show_profile": true, "show_settings": true}'),
     )
 
     notification = op.create_table(
