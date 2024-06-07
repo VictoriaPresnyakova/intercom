@@ -16,11 +16,10 @@ class AuthController:
             self.view.message_label.setText('Authentication successful')
             self.user.auth_token = None
             self.main_window.set_current_user(self.user)
-            if self.user.role != UserRole.DOORKEEPER:
-                self.main_window.show_main_view()
-            else:
+            if self.user.role == UserRole.DOORKEEPER:
                 self.main_window.show_main_view()  # TODO
-
+            else:
+                self.main_window.show_main_view()
         else:
             self.view.message_label.setText('Invalid token')
 
