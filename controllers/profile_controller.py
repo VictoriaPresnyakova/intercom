@@ -18,13 +18,13 @@ class ProfileController:
             self.view.full_name_input.setText(self.user.full_name)
             self.view.phone_input.setText(self.user.phone)
             self.view.address_input.setText(str(self.user.address))
-            #self.view.key_input.setText(self.user.key) TODO
+            self.view.notification_input.setCurrentText(self.user.notification_settings)
 
     def save_user_data(self):
         self.user.full_name = self.view.full_name_input.text()
         self.user.phone = self.view.phone_input.text()
         self.user.address = int(self.view.address_input.text()) #TODO
-
+        self.user.notification_settings = self.view.notification_input.currentText()
         try:
             self.user = self.user_service.update_user(self.user)
             if self.user:

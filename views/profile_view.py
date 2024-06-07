@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QComboBox
 
 
 class ProfileView(QWidget):
@@ -30,10 +30,9 @@ class ProfileView(QWidget):
         layout.addWidget(self.address_label)
         layout.addWidget(self.address_input)
 
-        # self.key_label = QLabel('Key', self) TODO
-        # self.key_input = QLineEdit(self)
-        # layout.addWidget(self.key_label)
-        # layout.addWidget(self.key_input)
+        self.notification_input = QComboBox(self)
+        self.notification_input.addItems(['all', 'accepted', 'canceled'])
+        layout.addWidget(self.notification_input)
 
         self.save_button = QPushButton('Save', self)
         layout.addWidget(self.save_button)

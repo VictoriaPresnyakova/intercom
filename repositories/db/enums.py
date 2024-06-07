@@ -5,3 +5,9 @@ class UserRole(str, Enum):
     USER = "user"
     DOORKEEPER = "doorkeeper"
     CHILD = "child"
+
+
+class UserNotification(str, Enum):
+    ACCEPTED = "accepted"
+    CANCELED = "canceled"
+    ALL = "all"
