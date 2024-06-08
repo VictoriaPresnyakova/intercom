@@ -10,8 +10,12 @@ class ProfileController:
         self.user = user
         self.load_user_data()
         self.view.save_button.clicked.connect(self.save_user_data)
-        self.view.back_button.clicked.connect(lambda: self.main_window.show_main_view())
+        self.view.back_button.clicked.connect(self.back)
         self.user_service = UserService()
+
+    def back(self):
+        self.view.message_label.setText('')
+        self.main_window.show_main_view()
 
     def load_user_data(self):
             self.view.email_input.setText(self.user.email)

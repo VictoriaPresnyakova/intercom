@@ -11,6 +11,11 @@ class MainController:
         user_settings = user.settings
         self.view.profile_button.setVisible(user_settings.get('show_profile', True))
         self.view.settings_button.setVisible(user_settings.get('show_settings', True))
+        self.view.exit_button.clicked.connect(self.exit)
+
+    def exit(self):
+        self.main_window.set_current_user(None)
+        self.main_window.show_initial_view()
 
 
 

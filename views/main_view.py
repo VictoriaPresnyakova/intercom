@@ -18,6 +18,9 @@ class MainView(QWidget):
         self.access_button = QPushButton('Edit Access', self)
         layout.addWidget(self.access_button)
 
+        self.exit_button = QPushButton('Exit', self)
+        layout.addWidget(self.exit_button)
+
         self.welcome_label = QLabel('Welcome to the Main Application!', self)
         layout.addWidget(self.welcome_label)
 
