@@ -25,7 +25,7 @@ class ProfileView(QWidget):
         layout.addWidget(self.phone_label)
         layout.addWidget(self.phone_input)
 
-        self.address_label = QLabel('Address', self)
+        self.address_label = QLabel('Flat number', self)
         self.address_input = QLineEdit(self)
         layout.addWidget(self.address_label)
         layout.addWidget(self.address_input)

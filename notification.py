@@ -22,4 +22,4 @@ def create_and_send_notifications():
                     user.notification_settings.value == notification.type.value:
                 mail_sender.send_email(user.email, notification.type, notification.text)
             print()
-        sleep(1 * 60)
+        sleep(20 * 60)

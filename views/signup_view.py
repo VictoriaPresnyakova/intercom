@@ -31,7 +31,7 @@ class SignUpView(QWidget):
         layout.addWidget(self.phone_input)
 
         self.address_input = QLineEdit(self)
-        self.address_input.setPlaceholderText('Address')
+        self.address_input.setPlaceholderText('Flat number')
         layout.addWidget(self.address_input)
 
         self.signup_button = QPushButton('Sign Up', self)

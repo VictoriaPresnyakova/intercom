@@ -13,12 +13,14 @@ class SignUpController:
         self.user_service = UserService()
 
     def handle_signup(self):
-        #TODO проверка на уникальность email, phone, address
         if self.view.email_input.text() == '':
             self.view.message_label.setText('Empty email')
             return
         if self.view.email_input.text().count('@') != 1:
             self.view.message_label.setText('Incorrect email')
+            return
+        if self.user_service.get_user_by_email(self.view.email_input.text()).__dict__:
+            self.view.message_label.setText('User with such email already exists')
             return
         if self.view.password_input.text() == '':
             self.view.message_label.setText('Empty password')
@@ -29,11 +31,14 @@ class SignUpController:
         if self.view.phone_input.text() == '':
             self.view.message_label.setText('Empty phone')
             return
+        if not self.view.phone_input.text().replace('+', '').replace('-', '').replace('(', '').replase(')', '').replace(' ', '').isdigit():
+            self.view.message_label.setText('Incorrect phone')
+            return
         if self.view.address_input.text() == '':
-            self.view.message_label.setText('Empty address')
+            self.view.message_label.setText('Empty flat number')
             return
         if not self.view.address_input.text().isdigit():
-            self.view.message_label.setText('Incorrect address')
+            self.view.message_label.setText('Flat number must be digit')
             return
         kwargs = {
             'email': self.view.email_input.text(),
@@ -43,7 +48,6 @@ class SignUpController:
             'phone': self.view.phone_input.text(),
             'address': int(self.view.address_input.text()),
         }
-
         try:
             user = self.user_service.create_user(kwargs)
             if not user:

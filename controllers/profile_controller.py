@@ -25,9 +25,24 @@ class ProfileController:
             self.view.notification_input.setCurrentText(self.user.notification_settings)
 
     def save_user_data(self):
+        if self.view.full_name_input.text() == '':
+            self.view.message_label.setText('Empty full_name')
+            return
+        if self.view.phone_input.text() == '':
+            self.view.message_label.setText('Empty phone')
+            return
+        if not self.view.phone_input.text().replace('+', '').replace('-', '').replace('(', '').replase(')', '').replace(' ', '').isdigit():
+            self.view.message_label.setText('Incorrect phone')
+            return
+        if self.view.address_input.text() == '':
+            self.view.message_label.setText('Empty flat number')
+            return
+        if not self.view.address_input.text().isdigit():
+            self.view.message_label.setText('Flat number must be digit')
+            return
         self.user.full_name = self.view.full_name_input.text()
         self.user.phone = self.view.phone_input.text()
-        self.user.address = int(self.view.address_input.text()) #TODO
+        self.user.address = int(self.view.address_input.text())
         self.user.notification_settings = self.view.notification_input.currentText()
         try:
             self.user = self.user_service.update_user(self.user)
