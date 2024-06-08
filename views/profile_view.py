@@ -30,6 +30,7 @@ class ProfileView(QWidget):
         layout.addWidget(self.address_label)
         layout.addWidget(self.address_input)
 
+        self.notification_label = QLabel('What notification you want to get', self)
         self.notification_input = QComboBox(self)
         self.notification_input.addItems(['all', 'accepted', 'canceled', 'none'])
         layout.addWidget(self.notification_input)

@@ -15,8 +15,9 @@ def create_and_send_notifications():
     while True:
         user_list = user_service.get_all_users()
         for user in user_list:
+            type = random.choice(notifications)
             notification = notification_service.create_notification(
-                {'type': random.choice(notifications), 'text': 'some_text', 'user_id': user.id})
+                {'type': type, 'text': f'request was {type}', 'user_id': user.id})
             print(notification)
             if user.notification_settings == UserNotification.ALL or \
                     user.notification_settings.value == notification.type.value:
