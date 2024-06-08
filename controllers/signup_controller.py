@@ -2,7 +2,7 @@ from models.user import User, UserRole
 import hashlib
 
 from repositories.db.common import insert_new_record
-from services.UserService import UserService
+from services.user_service import UserService
 
 
 class SignUpController:

@@ -1,3 +1,5 @@
+from threading import Thread
+
 from PyQt5.QtWidgets import QApplication, QMessageBox
 
 from controllers.access_controller import AccessController
@@ -9,6 +11,7 @@ from controllers.settings_controller import SettingsController
 from controllers.signup_controller import SignUpController
 from controllers.login_controller import LoginController
 from models.user import User
+from notification import create_and_send_notifications
 from repositories.db.enums import UserRole
 from repositories.db.migrate import alembic_auto_migrate
 from views.access_view import AccessView
@@ -124,9 +127,9 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
     alembic_auto_migrate()
 
-    app = QApplication([])
-    login_view = LoginView()
+    Thread(target=create_and_send_notifications, daemon=True).start()
 
+    app = QApplication([])
     main_window = MainWindow()
     #main_window.showMaximized()
     main_window.show()

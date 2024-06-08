@@ -8,7 +8,6 @@ import string
 
 
 class UserService:
-
     def __init__(self):
         self.repository = UserRepo()
 
@@ -17,7 +16,7 @@ class UserService:
         result = []
         for user in user_list:
             try:
-                User(**user)
+                result.append(User(**user))
             except Exception as e:
                 print(e)
         return result

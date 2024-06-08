@@ -9,11 +9,13 @@ class UserRepo(UserRepoABC):
 
     def get_all_users(self, limit, offset):
         try:
+            res = []
             with closing(connect()) as conn:
                 with conn.cursor(cursor_factory=NamedTupleCursor) as cursor:
                     cursor.execute('SELECT * FROM {} LIMIT %s offset %s'.format('public.user'), (limit, offset))
-                    res = cursor.fetchone()
-                    return {x: getattr(res, x) for x in res._fields}
+                    for row in cursor:
+                        res.append({x: getattr(row, x) for x in row._fields})
+                    return res
         except Exception as e:
             return {}
 

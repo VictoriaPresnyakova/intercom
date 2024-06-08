@@ -11,3 +11,9 @@ class UserNotification(str, Enum):
     ACCEPTED = "accepted"
     CANCELED = "canceled"
     ALL = "all"
+    NONE = "none"
+
+
+class NotificationType(str, Enum):
+    ACCEPTED = "accepted"
+    CANCELED = "canceled"

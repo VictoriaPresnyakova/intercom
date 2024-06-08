@@ -1,6 +1,6 @@
 from models.user import User
 from repositories.db.enums import UserRole
-from services.UserService import UserService
+from services.user_service import UserService
 
 
 class ProfileController:

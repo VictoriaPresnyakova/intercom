@@ -1,4 +1,4 @@
-from services.UserService import UserService
+from services.user_service import UserService
 
 
 class SettingsController:

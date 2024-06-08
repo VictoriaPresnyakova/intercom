@@ -9,7 +9,7 @@ class MailSender:
         self.from_password = EMAIL_PASSWORD
 
     def send_email(self, to_email, subject, body):
-        print(body)
+        print(to_email, subject, body)
         # TODO
         # msg = MIMEText(body)
         # msg["Subject"] = subject

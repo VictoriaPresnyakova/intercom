@@ -12,7 +12,7 @@ import sqlalchemy as sa
 # revision identifiers, used by Alembic.
 from sqlalchemy import ForeignKey
 
-from repositories.db.enums import UserNotification
+from repositories.db.enums import UserNotification, NotificationType
 
 revision = '2481f351089b'
 down_revision = None
@@ -23,7 +23,7 @@ depends_on = None
 def upgrade():
     from repositories.db.enums import UserRole
     op.execute("DROP TYPE IF EXISTS userrole;")
-    op.execute("DROP TYPE IF EXISTS usernotification_settings;")
+    op.execute("DROP TYPE IF EXISTS usernotification;")
     user = op.create_table(
         'user',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
@@ -41,10 +41,13 @@ def upgrade():
                   server_default='{"2factor": false, "show_profile": true, "show_settings": true}'),
     )
 
+    op.execute("DROP TYPE IF EXISTS notificationtype;")
     notification = op.create_table(
         'notification',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('text', sa.String(), nullable=False),
+        sa.Column('type', sa.Enum(NotificationType, values_callable=lambda obj: [e.value for e in obj]),
+                  nullable=False),
         sa.Column('user_id', sa.Integer, ForeignKey("public.user.id"), nullable=False),
     )
 
