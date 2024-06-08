@@ -38,7 +38,7 @@ def upgrade():
         sa.Column('notification_settings', sa.Enum(UserNotification, values_callable=lambda obj: [e.value for e in obj]),
                   nullable=False, server_default=UserNotification.ALL),
         sa.Column('settings', sa.JSON, nullable=True,
-                  server_default='{"2factor": false, "show_profile": true, "show_settings": true}'),
+                  server_default='{"2factor": true, "show_profile": true, "show_settings": true}'),
     )
 
     op.execute("DROP TYPE IF EXISTS notificationtype;")
