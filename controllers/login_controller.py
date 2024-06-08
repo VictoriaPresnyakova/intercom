@@ -16,8 +16,13 @@ class LoginController:
         self.view = view
         self.main_window = main_window
         self.view.login_button.clicked.connect(self.handle_login)
+        self.view.back_button.clicked.connect(self.back)
         self.user_service = UserService()
         self.mail_sender = MailSender()
+
+    def back(self):
+        self.view.message_label.setText('')
+        self.main_window.show_initial_view()
 
     def handle_login(self):
         username = self.view.username_input.text()

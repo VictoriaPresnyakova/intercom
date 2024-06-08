@@ -37,6 +37,9 @@ class SignUpView(QWidget):
         self.signup_button = QPushButton('Sign Up', self)
         layout.addWidget(self.signup_button)
 
+        self.back_button = QPushButton('Back', self)
+        layout.addWidget(self.back_button)
+
         self.message_label = QLabel('', self)
         layout.addWidget(self.message_label)
 

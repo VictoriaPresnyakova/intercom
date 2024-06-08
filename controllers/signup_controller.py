@@ -10,7 +10,12 @@ class SignUpController:
         self.view = view
         self.main_window = main_window
         self.view.signup_button.clicked.connect(self.handle_signup)
+        self.view.back_button.clicked.connect(self.back)
         self.user_service = UserService()
+
+    def back(self):
+        self.view.message_label.setText('')
+        self.main_window.show_initial_view()
 
     def handle_signup(self):
         if self.view.email_input.text() == '':

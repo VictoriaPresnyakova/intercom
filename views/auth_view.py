@@ -19,6 +19,9 @@ class AuthView(QWidget):
         self.resend_token_button = QPushButton('Resend Token', self)
         layout.addWidget(self.resend_token_button)
 
+        self.back_button = QPushButton('Back', self)
+        layout.addWidget(self.back_button)
+
         self.message_label = QLabel('', self)
         layout.addWidget(self.message_label)
 

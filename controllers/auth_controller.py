@@ -13,6 +13,11 @@ class AuthController:
         self.mail_sender = MailSender()
         self.view.verify_button.clicked.connect(self.verify_token)
         self.view.resend_token_button.clicked.connect(self.resend_token)
+        self.view.back_button.clicked.connect(self.back)
+
+    def back(self):
+        self.view.message_label.setText('')
+        self.main_window.show_login_view()
 
     def resend_token(self):
         if self.user:

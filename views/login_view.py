@@ -22,6 +22,9 @@ class LoginView(QWidget):
         self.login_button = QPushButton('Login', self)
         layout.addWidget(self.login_button)
 
+        self.back_button = QPushButton('Back', self)
+        layout.addWidget(self.back_button)
+
         self.message_label = QLabel('', self)
         layout.addWidget(self.message_label)
 
