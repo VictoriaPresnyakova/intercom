@@ -2,6 +2,7 @@ from models.user import User, UserRole
 import hashlib
 
 from repositories.db.common import insert_new_record
+from services.mail_sender import MailSender
 from services.user_service import UserService
 
 
@@ -12,6 +13,8 @@ class SignUpController:
         self.view.signup_button.clicked.connect(self.handle_signup)
         self.view.back_button.clicked.connect(self.back)
         self.user_service = UserService()
+        self.mail_sender = MailSender()
+
 
     def back(self):
         self.view.message_label.setText('')
@@ -54,11 +57,16 @@ class SignUpController:
             'address': int(self.view.address_input.text()),
         }
         try:
-            user = self.user_service.create_user(kwargs)
-            if not user:
-                raise Exception('Error while save user')
-            self.view.message_label.setText('Sign up successful')
-            self.main_window.show_login_view()
+            token = self.user_service.generate_token()
+            kwargs['auth_token'] = token
+            self.mail_sender.send_email(kwargs['email'], subject="Your Authentication Token",
+                                        body=f"Your authentication token is: {token}")
+            self.main_window.sign_up_auth_controller.set_user(kwargs)
+            self.main_window.show_sign_up_auth_view()
+            # user = self.user_service.create_user(kwargs)
+            # if not user:
+            #     raise Exception('Error while save user')
+            # self.view.message_label.setText('Sign up successful')
         except Exception as e:
             self.view.message_label.setText(f'Sign up failed: {str(e)}')
 

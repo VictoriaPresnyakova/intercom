@@ -8,6 +8,7 @@ from controllers.initial_controller import InitialController
 from controllers.main_controller import MainController
 from controllers.profile_controller import ProfileController
 from controllers.settings_controller import SettingsController
+from controllers.sign_up_auth_controller import SignUpAuthController
 from controllers.signup_controller import SignUpController
 from controllers.login_controller import LoginController
 from models.user import User
@@ -25,6 +26,7 @@ from views.login_view import LoginView
 from views.main_view import MainView
 from views.profile_view import ProfileView
 from views.settings_view import SettingsView
+from views.sign_up_auth_view import SignUpAuthView
 from views.signup_view import SignUpView
 
 CURRENT_USER = None
@@ -35,11 +37,13 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
+        self.setWindowTitle('Intercom')
 
         # Initialize views
         self.initial_view = InitialView()
         self.login_view = LoginView()
         self.signup_view = SignUpView()
+        self.signup_auth_view = SignUpAuthView()
         self.auth_view = AuthView()
         self.profile_view = ProfileView()
         self.settings_view = SettingsView()
@@ -51,6 +55,7 @@ class MainWindow(QMainWindow):
         self.login_controller = LoginController(self.login_view, self)
         self.signup_controller = SignUpController(self.signup_view, self)
         self.auth_controller = AuthController(self.auth_view, self)
+        self.sign_up_auth_controller = SignUpAuthController(self.signup_auth_view, self)
         self.main_controller = None
         self.settings_controller = None
         self.profile_controller = None
@@ -61,6 +66,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.initial_view)
         self.stacked_widget.addWidget(self.login_view)
         self.stacked_widget.addWidget(self.signup_view)
+        self.stacked_widget.addWidget(self.signup_auth_view)
         self.stacked_widget.addWidget(self.auth_view)
         self.stacked_widget.addWidget(self.profile_view)
         self.stacked_widget.addWidget(self.settings_view)
@@ -75,6 +81,9 @@ class MainWindow(QMainWindow):
 
     def show_auth_view(self):
         self.stacked_widget.setCurrentWidget(self.auth_view)
+
+    def show_sign_up_auth_view(self):
+        self.stacked_widget.setCurrentWidget(self.signup_auth_view)
 
     def show_signup_view(self):
         self.stacked_widget.setCurrentWidget(self.signup_view)

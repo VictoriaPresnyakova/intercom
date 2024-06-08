@@ -31,7 +31,7 @@ class ProfileController:
         if self.view.phone_input.text() == '':
             self.view.message_label.setText('Empty phone')
             return
-        if not self.view.phone_input.text().replace('+', '').replace('-', '').replace('(', '').replase(')', '').replace(' ', '').isdigit():
+        if not self.view.phone_input.text().replace('+', '').replace('-', '').replace('(', '').replace(')', '').replace(' ', '').isdigit():
             self.view.message_label.setText('Incorrect phone')
             return
         if self.view.address_input.text() == '':
